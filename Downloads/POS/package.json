@@ -1,0 +1,66 @@
+{
+  "name": "pay-uat-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@aspnet/signalr": "^1.1.4",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.5.1",
+    "@material-ui/lab": "^4.0.0-alpha.40",
+    "axios": "^0.19.0",
+    "env-cmd": "^10.0.1",
+    "funding": "^1.0.9",
+    "google-maps-react": "^2.0.6",
+    "history": "^4.7.2",
+    "image-webpack-loader": "^6.0.0",
+    "jquery": "^3.4.1",
+    "local-storage": "^2.0.0",
+    "material-ui-image": "^3.2.2",
+    "moment": "^2.24.0",
+    "ng-thermal-print": "^1.0.3",
+    "placeholder-loading": "^0.2.4",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-donut-chart": "^1.1.8",
+    "react-favicon": "0.0.17",
+    "react-js-pagination": "^3.0.2",
+    "react-lodash": "^0.1.2",
+    "react-recaptcha": "^2.3.10",
+    "react-redux": "^7.1.1",
+    "react-router": "^3.2.4",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^2.1.8",
+    "react-simple-keyboard": "^2.4.29",
+    "react-spring": "^8.0.27",
+    "react-toastify": "^5.5.0",
+    "redux": "^4.0.4",
+    "redux-axios-middleware": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "styled-components": "^4.4.1",
+    "use-state-if-mounted": "^1.0.4",
+    "uuid": "^7.0.3"
+  },
+  "scripts": {
+    "start": "env-cmd -f .env.development react-scripts start",
+    "build": "env-cmd -f .env.production react-scripts build",
+    "test": "env-cmd -f .env.development react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
