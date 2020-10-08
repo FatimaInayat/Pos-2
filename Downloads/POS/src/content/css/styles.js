@@ -3,23 +3,22 @@ const styles = {
 
 
 categoryTypography:{
-  fontSize:25,
+  fontSize:23,
   marginTop:1,
-  marginBottom:1,
+  
   color:'#7d7d7d'
 
 },
 cartTypography:{
-  fontSize:25,
+  fontSize:23,
   marginTop:1,
-  marginBottom:1,
   color:'#7d7d7d'
 
 },
 menuTypography:{
   fontSize:25,
   marginTop:1,
-  marginBottom:1,
+  marginBottom :1,
   color:'#7d7d7d'
 
 },

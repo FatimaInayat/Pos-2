@@ -1,13 +1,18 @@
 
 html,
 body {  
-  background: "white";  
+  background: #ececec;  
 }
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;400;800&display=swap');
 
 code {
   font-family: 'Dosis', sans-serif;
    
+}
+
+.MuiAppBar-colorPrimary{
+  background-color: white !important;
+  color: black !important;
 }
 .add-demo a:hover {
   background: white none repeat scroll 0 0 !important;

@@ -11,7 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import CartQuantityDialog from './CartQuantityDialog';
 import LocalDiningIcon from '@material-ui/icons/LocalDining';
 import CancelDialog from './CancelDialogeModel';
 const classes = {
@@ -40,7 +40,8 @@ class Menu extends Component {
       allCategoryColor:false,
       showCancelDialog:false,
       showDetail:false,
-      placeOrder:false
+      placeOrder:false,
+      OrderId:null
     
     };
   }
@@ -83,11 +84,11 @@ class Menu extends Component {
     this.setState({
       totalAmount: total,
       cartItem: this.state.addItem,
+      
     });
   }
   SubtractItem(id, item) {
     item.qty = parseInt(item.qty) - 1;
-
     if (item.qty === 0) {
       item["color"] = undefined;
       let cartList = this.state.cartItem;
@@ -95,7 +96,6 @@ class Menu extends Component {
       cartList.splice(index, 1);
       this.setState({ cartItem: cartList });
     }
-
     var total = this.state.totalAmount - parseInt(item.sale_price);
     this.setState({
       totalAmount: total,
@@ -158,6 +158,7 @@ class Menu extends Component {
     })
     var gst = (16 / 100) * this.state.totalAmount;
     let orderId = localStorage.getItem("orderId");
+    this.setState({OrderId : orderId})
     let EditOrderRequestObj;  
     EditOrderRequestObj = Object.assign({ 
     "Id": orderId.toString(),
@@ -194,7 +195,6 @@ class Menu extends Component {
 
   }
   SaveOrder(){
- 
     this.setState({showDetail:true,
       placeOrder:true
     })
@@ -320,6 +320,7 @@ class Menu extends Component {
                     onClick={() => {
                       this.AddItem(item.Id, item);
                     }}>
+                     
                     <Grid container>
                       <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Typography style={{}}>{item.name}</Typography>
@@ -343,7 +344,8 @@ class Menu extends Component {
                 <Typography style = {styles.cartTypography}>Cart</Typography>
             </Grid>
             </Grid>
-            <Grid container style={{borderTop: "3px solid #cd450a",marginLeft:16,maxHeight:'22em',minHeight:'22em', overflowY: 'scroll'}}>
+            
+            <Grid container style={{borderTop: "3px solid #cd450a",marginLeft:16,maxHeight:'23em',minHeight:'23em', overflowY: 'scroll'}}>
               {this.state.cartItem.length > 0 ? (
                 <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                   {this.state.cartItem.map((item, i) => (               
@@ -418,6 +420,28 @@ class Menu extends Component {
                     xl={12}
                     style={{
                       marginTop:'5%'            
+                    }}>
+                    <Typography  style={{ fontSize: 15,color:'#7d7d7d', float:'left',marginLeft:'6%'}}>
+                      Table# {this.props.match.params.Id}
+                    </Typography>
+                    {this.state.placeOrder === true ?
+                    <Typography style={{ fontSize: 15, color:'#7d7d7d',float:'right',marginRight:'6%'}}>
+                      Order# {this.state.OrderId}
+                    </Typography>
+                    :""
+
+                  }
+                  </Grid>              
+                </Grid>
+              <Grid container>
+                  <Grid item
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    style={{
+                      
                     }}>
                     <Typography  style={{ fontSize: 15,color:'#7d7d7d', float:'left',marginLeft:'6%'}}>
                      Quantity

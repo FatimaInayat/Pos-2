@@ -20,3 +20,69 @@
 .App-link {
   color: #09d3ac;
 }
+
+.Table-box{
+  height: 6.5em;                    
+  margin: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px !important;
+}
+
+.Table-free{
+  background-color: white !important;
+  color: #282c34 !important;
+  transition: 0.5s !important;
+}
+.Table-booked{
+  background-color: #2272f3 !important;
+  color: white !important;
+
+}
+
+.Table-box:hover{
+  background-color: #219df0 !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  transition: 0.3s;
+
+}
+
+.Selected-view{
+color: #2272f3 !important;
+font-size: 20px !important;
+font-weight: 900 !important;
+}
+
+.Unselected-view{
+  color: #282c34 !important;
+  font-size: 20px !important;
+font-weight: 900 !important;
+}
+
+.Table-number-of-persons{
+  font-size:  15px;
+  float: right;
+  position: relative;
+  top: 10px;
+  right: 15px;
+}
+.Table-number-of-persons-icon
+{
+  position: relative !important;
+    top: 3px !important;
+    left: 3px !important;
+    font-size: 15px !important;
+}
+
+.Table-number-of-persons-number{
+  font-size: 14px !important;
+  font-weight: 900 !important;
+}
+
+.time{
+  font-size: 12px !important;
+    position: relative !important;
+    top: 2px !important;
+}

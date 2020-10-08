@@ -9,6 +9,8 @@ import styles from '../content/css/styles';
 import "../content/css/index.css";
 import _ from "lodash";
 import Dialog from './CouponDialogModel';
+import SurchargeDialogModel from './SurchargeDialogModel';
+import {CardMembership, Person,Schedule} from '@material-ui/icons';
 
 
 const classes = {
@@ -101,7 +103,8 @@ class Home extends Component {
       layoutName: "default",
       input:"",
       hideInput:false,
-      gstAmount:null
+      gstAmount:null,
+      surcharge:false
     };
   }
   componentWillMount(){
@@ -113,10 +116,10 @@ class Home extends Component {
     })  
   }
   updateStatus(item,no_of_person,tableStatus) {
-
+    
     localStorage.setItem("persons",no_of_person);
     localStorage.setItem("orderId",item.last_order_id);
-    item["color"] = "#cd450a";
+    // item["color"] = "#cd450a";
     var lst = this.state.tableList;
     this.setState({
       tableList: lst,
@@ -158,23 +161,26 @@ class Home extends Component {
   };
 
   SurchargeApi(){
+    debugger
+    this.setState({surcharge:true})
+    
     let surchargeRequestObj;
     var gst = localStorage.getItem("gst");
-    surchargeRequestObj = Object.assign({ 
-      "gst_amount": parseInt(gst),
-      "Id": "54",
-      "service_charges": 0,
-      "total_amount": parseInt(localStorage.getItem("Total"))
-     }, surchargeRequestObj);
+    // surchargeRequestObj = Object.assign({ 
+    //   "gst_amount": parseInt(gst),
+    //   "Id": "54",
+    //   "service_charges": 0,
+    //   "total_amount": parseInt(localStorage.getItem("Total"))
+    //  }, surchargeRequestObj);
 
-     axios.post('https://uat.dsmeglobal.com/api/Restaurant/SurchargeApi',surchargeRequestObj)
-    .then(res => {
-      let result = res.data;
-      console.log(result)
-        })
-    .catch((error) => {
-       alert(error)
-      })
+    //  axios.post('https://uat.dsmeglobal.com/api/Restaurant/SurchargeApi',surchargeRequestObj)
+    // .then(res => {
+    //   let result = res.data;
+    //   console.log(result)
+    //     })
+    // .catch((error) => {
+    //    alert(error)
+    //   })
   }
   
   handleDialogOpen(){
@@ -198,7 +204,7 @@ class Home extends Component {
       <Container style={classes.ContainerWidth}>
         <Grid container>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Paper square className={classes.root}>
+            <Paper elevation={0} className={classes.root}>
       <Tabs
         variant="fullWidth"
         aria-label="icon tabs example">
@@ -206,15 +212,10 @@ class Home extends Component {
          onClick={() => {
           this.tableStatus();
         }}
-       style={{
-        color:this.state.payment === false?"#cd450b":"",
-        fontSize: 16
-      }}
+        className={`${this.state.payment === false? "Selected-view" : "Unselected-view"}`}
         />
-        <Tab label="Payment"  
-        style={{
-        color:this.state.payment === false?"":"#cd450b",
-        fontSize: 16}}
+        <Tab label="Payment"
+        className={`${this.state.payment !== false? "Selected-view" : "Unselected-view"}`}
         onClick={() => {
           this.paymentStatus();
         }}
@@ -232,26 +233,18 @@ class Home extends Component {
               {this.state.tableList.map((item, i) => (
                 <Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
                   <Paper
-                    elevation={3}
-                    style={{
-                      backgroundColor: item.table_status === 'free' ? "white":'#cd450b',
-                      color: item.table_status === 'free' ? "black" : "white",
-                      height: "6.5em",
-                      // width: '9em',
-                      margin: "0.5em",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}
+                    elevation={0}
+                    className={`Table-box ${item.table_status === 'free'? "Table-free" : "Table-booked"}`}                    
                     onClick={() => {
                       this.updateStatus(item,item.no_of_person,item.table_status);
                     }}>  
                  <Grid container>
                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    
                     <Typography
-                      style={{fontSize:15,float:'right',  padding: '0px 4px'}}
+                      className="Table-number-of-persons"
                     >
-                      {item.table_status === 'free' ? "":item.no_of_person}
+                      {item.table_status === 'free' ? "": <Fragment> <Person className="Table-number-of-persons-icon"/> <span className="Table-number-of-persons-number">{item.no_of_person}</span></Fragment>}
                     </Typography>
                    
                     </Grid>
@@ -262,7 +255,7 @@ class Home extends Component {
                         fontWeight: "bold",
                         fontSize:18,
                       }}>
-                      Table
+                      <CardMembership/>
                     </Typography>
                   </Grid>
                  
@@ -272,12 +265,12 @@ class Home extends Component {
                       {item.table_no}
                     </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{backgroundColor:"#9c958b"}}>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{backgroundColor:"#9c958b", borderRadius:"0px 0px 15px 15px"}}>
                     <Typography
                       style={{fontSize:12,float:'left',padding: '0px 20px'}}
                     >
-                      {item.table_status === 'free' ? "":item.order_time.split(" ")[1].split(":")[0]+
-                      ":"+item.order_time.split(" ")[1].split(":")[1]+" "+item.order_time.split(" ")[2]}
+                      {item.table_status === 'free' ? "":<Fragment><Schedule className="time" /> {item.order_time.split(" ")[1].split(":")[0]+
+                      ":"+item.order_time.split(" ")[1].split(":")[1]+" "+item.order_time.split(" ")[2]}</Fragment>}
                     </Typography>
                    
                     </Grid>
@@ -298,7 +291,7 @@ class Home extends Component {
            {this.state.tableList.filter(FilterTable =>FilterTable.table_status ==='busy').map((item, i) => (
              <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
                <Paper
-                 elevation={3}
+                 elevation={0}
                  style={{
                    backgroundColor: item.table_status === 'free' ? "white":'#cd450b',
                    color: item.table_status === 'free' ? "black" : "white",
@@ -327,7 +320,7 @@ class Home extends Component {
                      fontWeight: "bold",
                      fontSize:18,
                    }}>
-                   Table
+                   Tables
                  </Typography>
                </Grid>
               
@@ -354,7 +347,7 @@ class Home extends Component {
                  </Grid>
                  <Grid item xs={4} sm={4} md={4} lg={4} xl={4} >
                  <Paper
-                 elevation={3}
+                 elevation={0}
                  style={{
                 
                  //  height: "38em",
@@ -395,10 +388,7 @@ class Home extends Component {
                     sm={12}
                     md={12}
                     lg={12}
-                    xl={12}
-                    style={{
-                  
-                    }}>
+                    xl={12}>
                     <Typography  style={{ fontSize: 16, float:'left',marginLeft:'10%'}}>
                      Discount
                     </Typography>
@@ -495,7 +485,13 @@ class Home extends Component {
                        }}
                       >
                         SurCharge
-                    </Button>      
+                    </Button>   
+                    {this.state.surcharge === true ?
+                     <SurchargeDialogModel/>
+                     :
+                     ""     
+                    } 
+
                   </Grid>
                 </Grid>
                 {this.state.cash === false?
@@ -516,7 +512,7 @@ class Home extends Component {
                       }} onClick={() => {
                          this.CashView();
                         }}>
-                         CASH
+                       Cash + CREDIT
                     </Button>
                     </Grid>
                     </Grid>
@@ -536,7 +532,7 @@ class Home extends Component {
                     }} onClick={() => {
                         //  this.CancelOrder();
                         }}>
-                        CREDIT
+                        On Account
                     </Button>
                     </Grid>
                     </Grid>

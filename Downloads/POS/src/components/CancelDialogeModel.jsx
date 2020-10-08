@@ -99,12 +99,9 @@ export default function CancelDialogModel(props) {
     setOpen(false)
     
   };
-  const SelectCancelFoodItems = (item) => {
-   
+  const SelectCancelFoodItems = (item) => {   
     let cancelItemsArray = [];
     cancelItemsArray.push(item);
-  
-  
   }
   return (
       
